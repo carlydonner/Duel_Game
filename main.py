@@ -6,6 +6,8 @@ from pygame.locals import *
 import math, random
 from colors import *
 #import player, arrow
+import player
+import arrow
 
 WIDTH = 1200 #pixels
 HEIGHT = 600
@@ -39,20 +41,20 @@ while(True):
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_UP: 
-				#rotate up
-				Launcher1.changeAngle(3)
+				#move player up
+				player1.movePlayer(-5,0)
 			if event.key == pygame.K_DOWN: 
-				#rotate down
-				Launcher1.changeAngle(-3)
+				#move player down
+				player1.movePlayer(5,0)
 			if event.key == pygame.K_LEFT:
-				#decrease power
-				Launcher1.changeMagnitude(-5)
+				#move player left
+				player1.movePlayer(0,-5)
 			if event.key == pygame.K_RIGHT:
-				#increase power
-				Launcher1.changeMagnitude(5)
-			if (event.key == pygame.K_SPACE) and (not rock1.x!=0):
+				#move player right
+				player1.movePlayer(0,5)
+			if (event.key == pygame.K_SPACE)
 				#fire rock
-				Launcher1.fire(rock1)
+				player1.fire(arrow1)
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
