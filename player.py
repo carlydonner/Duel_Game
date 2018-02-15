@@ -15,7 +15,7 @@ class Player:
 	def fire(self, arrow):
 		arrow.v_x = 50
 
-	def movePlayer(self,dx,dy)
+	def movePlayer(self,dx,dy):
 		self.x += dx
 		self.y += dy
 
