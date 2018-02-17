@@ -1,4 +1,4 @@
-#!/usr/bin/py
+#!/usr/bin/python
 
 import pygame, sys, time
 import serial
@@ -44,17 +44,20 @@ while(True):
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_UP: 
-				#rotate up
-				Launcher1.changeAngle(3)
+				#move player up
+				player1.movePlayer(-5,0)
 			if event.key == pygame.K_DOWN: 
-				#rotate down
-				Launcher1.changeAngle(-3)
+				#move player down
+				player1.movePlayer(5,0)
 			if event.key == pygame.K_LEFT:
-				#decrease power
-				Launcher1.changeMagnitude(-5)
+				#move player left
+				player1.movePlayer(0,-5)
 			if event.key == pygame.K_RIGHT:
-				#increase power
-				Launcher1.changeMagnitude(5)
+				#move player right
+				player1.movePlayer(0,5)
+			if (event.key == pygame.K_SPACE)
+				#fire arrow
+				player1.fire(arrow1)
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
