@@ -1,7 +1,7 @@
 import pygame
 from colors import *
 
-ARROW_SIZE = 10
+ARROW_LENGTH = 10
 ARROW_WIDTH = 3
 
 class Arrow:
@@ -22,7 +22,7 @@ class Arrow:
 		return r
 
 	def isMoving(self):
-		return not ((self.v_x==0))
+		return (self.v_x!=0)
     
 	def draw(self, surf):
 		r = pygame.Rect((0,0,ARROW_LENGTH,ARROW_WIDTH))

@@ -14,9 +14,8 @@ def draw_world(surf):
 	textSurfaceObj = fontObj.render('DUEL',True,BLACK,WHITE) #white text, black highlight
 	textRectObj = textSurfaceObj.get_rect()
 	textRectObj.center = (WIDTH/2,20)
-	pygame.draw.rect(surf,SKY_COLOR,(0,0,WIDTH,HEIGHT)) #background
+	pygame.draw.rect(surf,NAVY_BLUE,(0,0,WIDTH,HEIGHT)) #background
 	pygame.draw.line(surf,RED,(WIDTH/2,0),(WIDTH/2,HEIGHT),10)#draw boundary line
-	#pygame.draw.rect(surf,(GRASS_COLOR),(0,380,500,20)) #grass
 	surf.blit(textSurfaceObj,textRectObj) #draw title text
 
 def displayText(strg,surf):
@@ -30,14 +29,14 @@ def displayText(strg,surf):
 
 pygame.init() 
 DISPLAYSURF = pygame.display.set_mode((1200,600)) #main window
-pygame.display.set_caption('Launcher')
+pygame.display.set_caption('Duel Game')
 #s = serial.Serial("/dev/ttyACM0") #serial connection
 FPS = 30 #frames/s
 fpsClock = pygame.time.Clock()
 
-player1 = player.Player(10,HEIGHT/2)
-player2 = player.Player(WIDTH-10,HEIGHT/2)
-arrow1 = Arrow.arrow(10,HEIGHT/2)
+player1 = player.Player(10,HEIGHT/2,GREEN)
+player2 = player.Player(WIDTH-10,HEIGHT/2,RED)
+arrow1 = arrow.Arrow(10,HEIGHT/2)
 objs = [player1,player2,arrow1]
 
 while(True):
@@ -55,7 +54,7 @@ while(True):
 			if event.key == pygame.K_RIGHT:
 				#move player right
 				player1.movePlayer(0,5)
-			if (event.key == pygame.K_SPACE)
+			if (event.key == pygame.K_SPACE):
 				#fire arrow
 				player1.fire(arrow1)
 		if event.type == QUIT:

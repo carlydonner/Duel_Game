@@ -4,13 +4,13 @@ from colors import *
 
 
 class Player:
-	def __init__(self,x,y):
+	def __init__(self,x,y,color):
 		self.x = x
 		self.y = y
 		self.angle = 45
 		self.mag = 50
 		self.width = 2
-		self.color = PLAYER_COLOR
+		self.color = color
 
 	def fire(self, arrow):
 		arrow.v_x = 50
