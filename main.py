@@ -5,17 +5,17 @@ import serial
 from pygame.locals import *
 import math, random
 from colors import *
-#import player, arrow
+import player, arrow
 
 WIDTH = 1200 #pixels
 HEIGHT = 600
 def draw_world(surf):
-	pygame.draw.line(surf,RED,(WIDTH/2,0),(WIDTH/2,HEIGHT),10)#draw boundary line
 	fontObj = pygame.font.Font('freesansbold.ttf',32) #font and font size
 	textSurfaceObj = fontObj.render('DUEL',True,BLACK,WHITE) #white text, black highlight
 	textRectObj = textSurfaceObj.get_rect()
 	textRectObj.center = (WIDTH/2,20)
 	pygame.draw.rect(surf,SKY_COLOR,(0,0,WIDTH,HEIGHT)) #background
+	pygame.draw.line(surf,RED,(WIDTH/2,0),(WIDTH/2,HEIGHT),10)#draw boundary line
 	#pygame.draw.rect(surf,(GRASS_COLOR),(0,380,500,20)) #grass
 	surf.blit(textSurfaceObj,textRectObj) #draw title text
 
@@ -35,6 +35,11 @@ pygame.display.set_caption('Launcher')
 FPS = 30 #frames/s
 fpsClock = pygame.time.Clock()
 
+player1 = player.Player(10,HEIGHT/2)
+player2 = player.Player(WIDTH-10,HEIGHT/2)
+arrow1 = Arrow.arrow(10,HEIGHT/2)
+objs = [player1,player2,arrow1]
+
 while(True):
 	for event in pygame.event.get():
 		if event.type == pygame.KEYDOWN:
@@ -50,9 +55,6 @@ while(True):
 			if event.key == pygame.K_RIGHT:
 				#increase power
 				Launcher1.changeMagnitude(5)
-			if (event.key == pygame.K_SPACE) and (not rock1.x!=0):
-				#fire rock
-				Launcher1.fire(rock1)
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
@@ -63,18 +65,9 @@ while(True):
 	#pot = x.rstrip().split(",") #split up values
 	#Launcher1.changeAngle(pot[0]/10.0) #change angle (scaled)
 	#Launcher1.changeMagnitude(pot[1]/10.0) #change magnitude (scaled)
-"""
-	if(hole1.hitBy(rock1)):
-		displayText("HIT!",DISPLAYSURF)
-		rock1.moveTo(0,380) #move rock back to start
-		hole1.moveTo((280*random.random())+100,385) #move hole to random location
-	elif(rock1.y>385):
-		#send rock to start when it misses
-		rock1.moveTo(0,380)
-	draw_world(DISPLAYSURF) #draw background
 	for obj in objs:
-		obj.draw(DISPLAYSURF) #draw objects 
-"""
+		obj.draw(DISPLAYSURF) #draw objects
+
 	
 
 
