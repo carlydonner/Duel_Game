@@ -44,16 +44,16 @@ while(True):
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_UP: 
 				#move player up
-				player1.movePlayer(-5,0)
+				player1.movePlayer(0,-10)
 			if event.key == pygame.K_DOWN: 
 				#move player down
-				player1.movePlayer(5,0)
+				player1.movePlayer(0,10)
 			if event.key == pygame.K_LEFT:
 				#move player left
-				player1.movePlayer(0,-5)
+				player1.movePlayer(-10,0)
 			if event.key == pygame.K_RIGHT:
 				#move player right
-				player1.movePlayer(0,5)
+				player1.movePlayer(10,0)
 			if (event.key == pygame.K_SPACE):
 				#fire arrow
 				player1.fire(arrow1)
@@ -61,7 +61,6 @@ while(True):
 			pygame.quit()
 			sys.exit()
 	draw_world(DISPLAYSURF) #draw background
-	pygame.display.update()
 	fpsClock.tick(FPS)
 	#x = s.readline() #read from potentiometers
 	#pot = x.rstrip().split(",") #split up values
@@ -69,6 +68,7 @@ while(True):
 	#Launcher1.changeMagnitude(pot[1]/10.0) #change magnitude (scaled)
 	for obj in objs:
 		obj.draw(DISPLAYSURF) #draw objects
+	pygame.display.update()
 
 	
 
