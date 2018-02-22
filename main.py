@@ -27,16 +27,18 @@ def displayText(strg,surf):
 	pygame.display.update()
 	time.sleep(1)
 
-pygame.init() 
-DISPLAYSURF = pygame.display.set_mode((1200,600)) #main window
-pygame.display.set_caption('Duel Game')
-#s = serial.Serial("/dev/ttyACM0") #serial connection
-FPS = 30 #frames/s
-fpsClock = pygame.time.Clock()
+def main():
+	pygame.init() 
+	DISPLAYSURF = pygame.display.set_mode((1200,600)) #main window
+	pygame.display.set_caption('Duel Game')
+	#s = serial.Serial("/dev/ttyACM0") #serial connection
+	FPS = 30 #frames/s
+	fpsClock = pygame.time.Clock()
+	player1 = player.Player(10,HEIGHT/2,GREEN)
+	player2 = player.Player(WIDTH-10,HEIGHT/2,RED)
+	objs = [player1,player2]
 
-player1 = player.Player(10,HEIGHT/2,GREEN)
-player2 = player.Player(WIDTH-10,HEIGHT/2,RED)
-objs = [player1,player2]
+main()
 
 while(True):
 	for event in pygame.event.get():
