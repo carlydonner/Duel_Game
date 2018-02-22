@@ -36,8 +36,7 @@ fpsClock = pygame.time.Clock()
 
 player1 = player.Player(10,HEIGHT/2,GREEN)
 player2 = player.Player(WIDTH-10,HEIGHT/2,RED)
-arrow1 = arrow.Arrow(10,HEIGHT/2)
-objs = [player1,player2,arrow1]
+objs = [player1,player2]
 
 while(True):
 	for event in pygame.event.get():
@@ -56,7 +55,9 @@ while(True):
 				player1.movePlayer(10,0)
 			if (event.key == pygame.K_SPACE):
 				#fire arrow
+				arrow1 = arrow.Arrow(player1.x,player1.y)
 				player1.fire(arrow1)
+				objs.append(arrow1)
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
