@@ -15,7 +15,7 @@ class Player:
 			self.playerside = 2
 
 	def fire(self, arrow):
-		arrow.v_x = 50
+		arrow.v_x = 100
 
 	def movePlayer(self,dx,dy):
 		#keep players within their boundaries
@@ -31,8 +31,10 @@ class Player:
 				dy=0
 		self.x += dx
 		self.y += dy
-		
-	
-	def draw(self,surf):    
+
+	def hitBy(self,obj):
+		return self.r.colliderect(obj.r)
+
+	def draw(self,surf):
 		self.r.center = (self.x,self.y)
 		pygame.draw.rect(surf,self.color,self.r)

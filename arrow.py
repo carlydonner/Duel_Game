@@ -2,15 +2,19 @@ import pygame
 from colors import *
 
 ARROW_LENGTH = 10
-ARROW_WIDTH = 3
-ARROW_SPEED = 10
+ARROW_HEIGHT = 3
 
 class Arrow:
-	def __init__(self,x,y):
+	def __init__(self,x,y,playernum):
 		self.x = x
 		self.y = y
-		self.r = pygame.Rect(0,0,ARROW_WIDTH,ARROW_LENGTH)
+		self.v_x = 0
+		self.r = pygame.Rect(0,0,ARROW_LENGTH,ARROW_HEIGHT)
 		self.r.center = (self.x,self.y)
+		if playernum==1:
+			self.color = GREEN
+		else:
+			self.color = RED
 
 	def move(self, dt):
 		self.x += self.v_x*dt
@@ -30,4 +34,4 @@ class Arrow:
 
 	def draw(self, surf):
 		self.r.center = (self.x,self.y)
-		pygame.draw.rect(surf, ARROW_COLOR, r)
+		pygame.draw.rect(surf,self.color, self.r)
