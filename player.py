@@ -15,7 +15,10 @@ class Player:
 			self.playerside = 2
 
 	def fire(self, arrow):
-		arrow.v_x = 100
+		if self.playerside==1:
+			arrow.v_x = 100
+		else:
+			arrow.v_x = -100
 
 	def movePlayer(self,dx,dy):
 		#keep players within their boundaries
