@@ -69,7 +69,10 @@ def main():
 			for item in P1_arrows:
 				item.move(1.0/FPS) #update P1 arrows if there are any
 				if (player2.hitBy(item)):
-					displayText("HIT!",DISPLAYSURF)
+					displayText("Player 1 wins!",DISPLAYSURF)
+					displayText("Player 2... You suck!",DISPLAYSURF)
+				if (item.x > 1200):
+					item.moveTo(1300,1300)
 		fpsClock.tick(FPS)
 		#s.write('p') #send cmd to send serial data
 		#x = s.readline() #read from potentiometers
