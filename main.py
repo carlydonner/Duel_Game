@@ -20,7 +20,7 @@ def draw_world(surf):
 
 def displayText(strg,surf):
 	fontObj = pygame.font.Font('freesansbold.ttf',32)
-	textSurfaceObj = fontObj.render(strg,True, RED)
+	textSurfaceObj = fontObj.render(strg,True, RED,BLACK)
 	textRectObj = textSurfaceObj.get_rect()
 	textRectObj.center = (WIDTH/2, 60)
 	surf.blit(textSurfaceObj,textRectObj)
@@ -28,7 +28,7 @@ def displayText(strg,surf):
 	time.sleep(1)
 
 def main():
-	pygame.init() 
+	pygame.init()
 	DISPLAYSURF = pygame.display.set_mode((1200,600)) #main window
 	pygame.display.set_caption('Duel Game')
 	#s = serial.Serial("/dev/ttyACM0") #serial connection
@@ -36,50 +36,51 @@ def main():
 	fpsClock = pygame.time.Clock()
 	player1 = player.Player(10,HEIGHT/2,GREEN)
 	player2 = player.Player(WIDTH-10,HEIGHT/2,RED)
+	P1_arrows = []
 	objs = [player1,player2]
 
-main()
-
-while(True):
-	for event in pygame.event.get():
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_UP: 
-				#move player up
-				player1.movePlayer(0,-10)
-			if event.key == pygame.K_DOWN: 
-				#move player down
-				player1.movePlayer(0,10)
-			if event.key == pygame.K_LEFT:
-				#move player left
-				player1.movePlayer(-10,0)
-			if event.key == pygame.K_RIGHT:
-				#move player right
-				player1.movePlayer(10,0)
-			if (event.key == pygame.K_SPACE):
-				#fire arrow
-				arrow1 = arrow.Arrow(player1.x,player1.y)
-				player1.fire(arrow1)
-				objs.append(arrow1)
-		if event.type == QUIT:
-			pygame.quit()
-			sys.exit()
-	draw_world(DISPLAYSURF) #draw background
-	fpsClock.tick(FPS)
-	#x = s.readline() #read from potentiometers
-	#pot = x.rstrip().split(",") #split up values
-	#Launcher1.changeAngle(pot[0]/10.0) #change angle (scaled)
-	#Launcher1.changeMagnitude(pot[1]/10.0) #change magnitude (scaled)
-	for obj in objs:
-		obj.draw(DISPLAYSURF) #draw objects
-	pygame.display.update()
-
-	
-
-
-
-
-
-
+	#main game loop
+	while(True):
+		for event in pygame.event.get():
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_UP:
+					#move player up
+					player1.movePlayer(0,-10)
+				if event.key == pygame.K_DOWN:
+					#move player down
+					player1.movePlayer(0,10)
+				if event.key == pygame.K_LEFT:
+					#move player left
+					player1.movePlayer(-10,0)
+				if event.key == pygame.K_RIGHT:
+					#move player right
+					player1.movePlayer(10,0)
+				if (event.key == pygame.K_SPACE):
+					#fire arrow
+					newarrow = arrow.Arrow(player1.x,player1.y,1)
+					objs.append(newarrow) #add arrow to objs
+					player1.fire(newarrow)
+					P1_arrows.append(newarrow)
+			if event.type == QUIT:
+				pygame.quit()
+				sys.exit()
+		draw_world(DISPLAYSURF) #draw background
+		if P1_arrows:
+			for item in P1_arrows:
+				item.move(1.0/FPS) #update P1 arrows if there are any
+				if (player2.hitBy(item)):
+					displayText("HIT!",DISPLAYSURF)
+		fpsClock.tick(FPS)
+		#s.write('p') #send cmd to send serial data
+		#x = s.readline() #read from potentiometers
+		#pot = x.rstrip().split(",") #split up values
+		#Launcher1.changeAngle(pot[0]/10.0) #change angle (scaled)
+		#Launcher1.changeMagnitude(pot[1]/10.0) #change magnitude (scaled)
+		for obj in objs:
+			obj.draw(DISPLAYSURF) #draw objects
+		pygame.display.update()
 
 
 
+if __name__=="__main__":
+	main()
