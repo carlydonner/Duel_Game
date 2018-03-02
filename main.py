@@ -37,6 +37,8 @@ def main():
 	fpsClock = pygame.time.Clock()
 	player1 = player.Player(10,HEIGHT/2,GREEN)
 	player2 = player.Player(WIDTH-10,HEIGHT/2,RED)
+	playerlife1 = 3
+	playerlife2 = 3
 	P1_arrows = []
 	P2_arrows = []
 	objs = [player1,player2]
@@ -84,12 +86,19 @@ def main():
 			for item in P1_arrows:
 				item.move(1.0/FPS) #update P1 arrows if there are any
 				if (player2.hitBy(item)):
-					displayText("HIT!",DISPLAYSURF)
+					player2.moveTo(WIDTH-10,HEIGHT/2)
+					playerlife2 = playerlife2 -1
+					if (playerlife2 < 0):
+						displayText("BOOM! Player2 you suck! Player1 wins!",DISPLAYSURF)
+
 		if P2_arrows:
 			for item in P2_arrows:
 				item.move(1.0/FPS)
 				if (player1.hitBy(item)):
-					displayText("HIT!",DISPLAYSURF)
+					player1.moveTo(10,HEIGHT/2)
+					playerlife1 = playerlife1 -1
+					if (playerlife1 < 0):
+						displayText("BOOM! Player1 you suck! Player2 wins!",DISPLAYSURF)
 		fpsClock.tick(FPS)
 		#s.write('p') #send cmd to send serial data
 		#x = s.readline() #read from potentiometers

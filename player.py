@@ -16,9 +16,9 @@ class Player:
 
 	def fire(self, arrow):
 		if self.playerside==1:
-			arrow.v_x = 100
+			arrow.v_x = 200
 		else:
-			arrow.v_x = -100
+			arrow.v_x = -200
 
 	def movePlayer(self,dx,dy):
 		#keep players within their boundaries
@@ -37,6 +37,10 @@ class Player:
 
 	def hitBy(self,obj):
 		return self.r.colliderect(obj.r)
+
+	def moveTo(self, x, y):
+		self.x = x
+		self.y = y
 
 	def draw(self,surf):
 		self.r.center = (self.x,self.y)
