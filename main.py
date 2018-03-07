@@ -32,7 +32,7 @@ def main():
 	pygame.init()
 	DISPLAYSURF = pygame.display.set_mode((1200,600)) #main window
 	pygame.display.set_caption('Duel Game')
-	#s = serial.Serial("/dev/ttyACM0") #serial connection
+	s = serial.Serial("/dev/ttyACM0") #serial connection
 	FPS = 30 #frames/s
 	fpsClock = pygame.time.Clock()
 	player1 = player.Player(10,HEIGHT/2,GREEN)
@@ -42,6 +42,10 @@ def main():
 	P1_arrows = []
 	P2_arrows = []
 	objs = [player1,player2]
+	P1X = 0
+	P1Y =0
+	P2X = 0
+	P2Y = 0
 
 	#main game loop
 	while(True):
@@ -89,8 +93,11 @@ def main():
 					player2.moveTo(WIDTH-10,HEIGHT/2)
 					playerlife2 = playerlife2 -1
 					if (playerlife2 < 0):
-						displayText("BOOM! Player2 you suck! Player1 wins!",DISPLAYSURF)
-
+						while(1):
+							displayText("BOOM! Player2 you suck! Player1 wins!",DISPLAYSURF)
+							if event.type == QUIT:
+								pygame.quit()
+								sys.exit()
 		if P2_arrows:
 			for item in P2_arrows:
 				item.move(1.0/FPS)
@@ -98,13 +105,40 @@ def main():
 					player1.moveTo(10,HEIGHT/2)
 					playerlife1 = playerlife1 -1
 					if (playerlife1 < 0):
-						displayText("BOOM! Player1 you suck! Player2 wins!",DISPLAYSURF)
+						while(1):
+							displayText("BOOM! Player1 you suck! Player2 wins!",DISPLAYSURF)
+							if event.type == QUIT:
+								pygame.quit()
+								sys.exit()
+		s.write("p") #send cmd to send serial data
+		str_data = s.readline() #read from potentiometers
+		data = [int(x) for x in str_data.split(',')]
+		#print data
+		if data[4]==1:
+			newarrow1 = arrow.Arrow(player1.x,player1.y,1)
+			objs.append(newarrow1)
+			player1.fire(newarrow1)
+			P1_arrows.append(newarrow1)
+		if data[5]==1:
+			newarrow2 = arrow.Arrow(player2.x,player2.y,2)
+			objs.append(newarrow2) #add arrow to objs
+			player2.fire(newarrow2)
+			P2_arrows.append(newarrow2)
+		if data[0]>518 or data[0]<512:
+			P1X = -(data[0]-513.0)/10.0
+		else:
+			P1X=0
+		if data[1]>500 or data[1]<498:
+			P1Y = (data[1]-499.0)/9.0
+		else:
+			P1Y=0
+		if data[2]>532 or data[2]<528:
+			P2X = -(data[2]-530.0)/10.0
+		else:
+			P2X = 0
+		player1.movePlayer(P1X,P1Y)
+		#player2.movePlayer()
 		fpsClock.tick(FPS)
-		#s.write('p') #send cmd to send serial data
-		#x = s.readline() #read from potentiometers
-		#pot = x.rstrip().split(",") #split up values
-		#Launcher1.changeAngle(pot[0]/10.0) #change angle (scaled)
-		#Launcher1.changeMagnitude(pot[1]/10.0) #change magnitude (scaled)
 		for obj in objs:
 			obj.draw(DISPLAYSURF) #draw objects
 		pygame.display.update()

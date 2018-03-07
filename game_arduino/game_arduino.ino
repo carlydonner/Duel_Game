@@ -1,9 +1,10 @@
-#define joyx1 A0
-#define joyy1 A1
-#define joyx2 A2
-#define joyy2 A3
-#define but1 1
-#define but2 2
+
+#define joyx1 A1
+#define joyy1 A2
+#define joyx2 A3
+#define joyy2 A4
+#define but1 4
+#define but2 7
 
 void setup(){
   Serial.begin(9600);
