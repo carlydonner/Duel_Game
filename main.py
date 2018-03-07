@@ -136,8 +136,12 @@ def main():
 			P2X = -(data[2]-530.0)/10.0
 		else:
 			P2X = 0
+		if data[3]>515 or data[3]<512:
+			P2Y = -(data[3]-513)/10.0
+		else:
+			P2Y = 0
 		player1.movePlayer(P1X,P1Y)
-		#player2.movePlayer()
+		player2.movePlayer(P2X,P2Y)
 		fpsClock.tick(FPS)
 		for obj in objs:
 			obj.draw(DISPLAYSURF) #draw objects
