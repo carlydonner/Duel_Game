@@ -23,15 +23,31 @@ class Player:
 	def movePlayer(self,dx,dy):
 		#keep players within their boundaries
 		if self.playerside ==1:
-			if (self.x+dx)<15 or (self.x+dx)>585:
+			if (self.x+dx)<15:
 				dx=0
-			if (self.y+dy)<15 or (self.y+dy)>585:
+				self.x=15
+			if (self.x+dx)>585:
+				dx=0
+				self.x=585
+			if (self.y+dy)<15:
 				dy=0
+				self.y=15
+			if (self.y+dy)>585:
+				dy=0
+				self.y=585
 		else:
-			if (self.x+dx)<615 or (self.x+dx)>1185:
+			if (self.x+dx)<615:
 				dx=0
-			if (self.y+dy)<15 or (self.y+dy)>585:
+				self.x=615
+			if (self.x+dx)>1185:
+				dx=0
+				self.y=1185
+			if (self.y+dy)<15:
 				dy=0
+				self.y=15
+			if (self.y+dy)>585:
+				dy=0
+				self.y=585
 		self.x += dx
 		self.y += dy
 

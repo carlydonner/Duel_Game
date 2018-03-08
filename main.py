@@ -49,6 +49,7 @@ def main():
 
 	#main game loop
 	while(True):
+		#Keyboard backup controls
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_w:
@@ -60,16 +61,12 @@ def main():
 				if event.key == pygame.K_d:
 					player1.movePlayer(20,0)
 				if event.key == pygame.K_UP:
-					#move player up
 					player2.movePlayer(0,-20)
 				if event.key == pygame.K_DOWN:
-					#move player down
 					player2.movePlayer(0,20)
 				if event.key == pygame.K_LEFT:
-					#move player left
 					player2.movePlayer(-20,0)
 				if event.key == pygame.K_RIGHT:
-					#move player right
 					player2.movePlayer(20,0)
 				if (event.key == pygame.K_SPACE):
 					#fire arrow
@@ -95,9 +92,10 @@ def main():
 					if (playerlife2 < 0):
 						while(1):
 							displayText("BOOM! Player2 you suck! Player1 wins!",DISPLAYSURF)
-							if event.type == QUIT:
-								pygame.quit()
-								sys.exit()
+							for event in pygame.event.get():
+								if event.type == QUIT:
+									pygame.quit()
+									sys.exit()
 		if P2_arrows:
 			for item in P2_arrows:
 				item.move(1.0/FPS)
@@ -107,9 +105,10 @@ def main():
 					if (playerlife1 < 0):
 						while(1):
 							displayText("BOOM! Player1 you suck! Player2 wins!",DISPLAYSURF)
-							if event.type == QUIT:
-								pygame.quit()
-								sys.exit()
+							for event in pygame.event.get():
+								if event.type == QUIT:
+									pygame.quit()
+									sys.exit()
 		s.write("p") #send cmd to send serial data
 		str_data = s.readline() #read from potentiometers
 		data = [int(x) for x in str_data.split(',')]
@@ -133,7 +132,7 @@ def main():
 		else:
 			P1Y=0
 		if data[2]>532 or data[2]<528:
-			P2X = -(data[2]-530.0)/10.0
+			P2X = (data[2]-530.0)/10.0
 		else:
 			P2X = 0
 		if data[3]>515 or data[3]<512:
